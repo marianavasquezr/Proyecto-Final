@@ -48,3 +48,35 @@ class View:
             tk.Label(self.root, text=paciente_str).pack()
             tk.Button(self.root, text="Eliminar", command=lambda p=paciente: self.controller.eliminar_paciente(p['identificacion'])).pack()
         tk.Button(self.root, text="Volver", command=self.pantalla).pack()
+
+    def agregar_paciente(self):
+        nombre = self.prompt("Agregar Paciente", "Nombre:")
+        edad = self.prompt("Agregar Paciente", "Edad:")
+        enfermedad = self.prompt("Agregar Paciente", "Enfermedad:")
+        historia_medica = self.prompt("Agregar Paciente", "Historia Médica:")
+        id_paciente = self.prompt("Agregar Paciente", "ID del Paciente:")
+        success, message = self.controller.agregar_paciente(nombre, edad, enfermedad, historia_medica, id_paciente)
+        self.show_message("Resultado", message)
+
+    def asignar_terapia(self):
+        id_paciente = self.prompt("Asignar Terapia", "ID del Paciente:")
+        terapia = self.prompt("Asignar Terapia", "Terapia:")
+        fecha = self.prompt("Asignar Terapia", "Fecha:")
+        message = self.controller.asignar_terapia(id_paciente, terapia, fecha)
+        self.show_message("Resultado", message)
+
+    def obtener_paciente(self):
+        id_paciente = self.prompt("Buscar Paciente", "ID del Paciente:")
+        paciente, terapias = self.controller.buscar_paciente_por_id(id_paciente)
+        self.mostrar_resultados_busqueda(paciente, terapias)
+
+    def login(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        if self.user_controller.verificar_credenciales(username, password):
+            self.pantalla()
+        else:
+            self.show_message("Error", "Credenciales incorrectas")
+
+    def logout(self):
+        self.entrar()    
