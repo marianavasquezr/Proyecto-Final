@@ -32,7 +32,7 @@ class PacienteModelo:
         self.cursor.execute('''INSERT INTO pacientes (id, nombre, edad, enfermedad, historia_medica)
                                VALUES (?, ?, ?, ?, ?)''', (id_paciente, nombre, edad, enfermedad, historia_medica))
         self.conexion.commit()
-        
+
     def obtener_pacientes(self):
         self.cursor.execute('''SELECT * FROM pacientes''')
         return self.cursor.fetchall()
@@ -49,7 +49,9 @@ class PacienteModelo:
 
     def eliminar_paciente(self, id_paciente):
         self.cursor.execute('''DELETE FROM pacientes WHERE id = ?''', (id_paciente,))
+        self.cursor.execute('''DELETE FROM terapias WHERE id_paciente = ?''', (id_paciente,))
         self.conexion.commit()
+
         
 class UsuarioModelo:
     def __init__(self):
