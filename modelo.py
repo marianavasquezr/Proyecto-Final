@@ -62,3 +62,17 @@ class UsuarioModelo:
             return True
         else:
             return False
+
+class TerapiaModelo:
+    def __init__(self):
+        self.conexion = sqlite3.connect('hospital.db')
+        self.cursor = self.conexion.cursor()
+
+    def asignar_terapia(self, id_paciente, terapia, fecha):
+        self.cursor.execute('''INSERT INTO terapias (id_paciente, terapia, fecha)
+                               VALUES (?, ?, ?)''', (id_paciente, terapia, fecha))
+        self.conexion.commit()
+
+    def obtener_terapias_por_paciente(self, id_paciente):
+        self.cursor.execute('''SELECT terapia, fecha FROM terapias WHERE id_paciente=?''', (id_paciente,))
+        return self.cursor.fetchall()
