@@ -11,20 +11,28 @@ class PacienteModelo:
                                 id INTEGER PRIMARY KEY,
                                 nombre TEXT,
                                 edad INTEGER,
-                                enfermedad TEXT
+                                enfermedad TEXT,
+                                historia_medica TEXT
+                              )''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS terapias (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                id_paciente INTEGER,
+                                terapia TEXT,
+                                fecha TEXT,
+                                FOREIGN KEY(id_paciente) REFERENCES pacientes(id)
                               )''')
         self.conexion.commit()
 
-    def agregar_paciente(self, nombre, edad, enfermedad, id_paciente):
+    def agregar_paciente(self, nombre, edad, enfermedad, historia_medica, id_paciente):
         # Verificar que el ID no se repita
         self.cursor.execute("SELECT id FROM pacientes WHERE id=?", (id_paciente,))
         if self.cursor.fetchone() is not None:
             raise ValueError("El ID de paciente ya existe")
 
-        self.cursor.execute('''INSERT INTO pacientes (nombre, edad, enfermedad)
-                               VALUES (?, ?, ?)''', (nombre, edad, enfermedad))
+        self.cursor.execute('''INSERT INTO pacientes (id, nombre, edad, enfermedad, historia_medica)
+                               VALUES (?, ?, ?, ?, ?)''', (id_paciente, nombre, edad, enfermedad, historia_medica))
         self.conexion.commit()
-
+        
     def obtener_pacientes(self):
         self.cursor.execute('''SELECT * FROM pacientes''')
         return self.cursor.fetchall()
