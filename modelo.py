@@ -23,15 +23,16 @@ class PacienteModelo:
                               )''')
         self.conexion.commit()
 
-    def agregar_paciente(self, nombre, edad, enfermedad, historia_medica, id_paciente):
-        # Verificar que el ID no se repita
+    def agregar_paciente(self, nombre, edad, enfermedad, id_paciente):
         self.cursor.execute("SELECT id FROM pacientes WHERE id=?", (id_paciente,))
         if self.cursor.fetchone() is not None:
             raise ValueError("El ID de paciente ya existe")
-
-        self.cursor.execute('''INSERT INTO pacientes (id, nombre, edad, enfermedad, historia_medica)
-                               VALUES (?, ?, ?, ?, ?)''', (id_paciente, nombre, edad, enfermedad, historia_medica))
+        self.cursor.execute('''INSERT INTO pacientes (id, nombre, edad, enfermedad)
+                               VALUES (?, ?, ?, ?)''', (id_paciente, nombre, edad, enfermedad))
         self.conexion.commit()
+
+    # Otros métodos...
+
 
     def obtener_pacientes(self):
         self.cursor.execute('''SELECT * FROM pacientes''')

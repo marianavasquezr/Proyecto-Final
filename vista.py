@@ -2,13 +2,11 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 
 class View:
-    def __init__(self, PacienteControlador, usercontroller):
+    def __init__(self, PacienteControlador, Controlador):
         self.controllerP = PacienteControlador
-        self.usercontroller = usercontroller
+        self.usercontroller = Controlador
         self.root = tk.Tk()
         self.root.title("Gestión de Pacientes")
-        if self.usercontroller:
-            self.usercontroller.vista = self  # Asignar la instancia de View al controlador
 
     def entrar(self):
         self.limpiar()
@@ -20,6 +18,8 @@ class View:
         self.password_entry = tk.Entry(self.root, show="*")
         self.password_entry.pack()
         tk.Button(self.root, text="Login", command=self.usercontroller.login).pack()
+
+        # Configurar las entradas en el controlador después de definirlas
         self.usercontroller.set_username_entry(self.username_entry)
         self.usercontroller.set_password_entry(self.password_entry)
 
@@ -28,13 +28,13 @@ class View:
         self.root.geometry("400x300")
         tk.Button(self.root, text="Agregar Paciente", command=self.agregar_paciente).pack()
         tk.Button(self.root, text="Buscar Paciente", command=self.obtener_paciente).pack()
+        tk.Button(self.root, text="Agregar terapia", command=self.asignar_terapia).pack()
         tk.Button(self.root, text="Salir", command=self.usercontroller.logout).pack()
 
     def panttalla2(self):
         self.limpiar()
         self.root.geometry("450x350")
         tk.Button(self.root, text="Consultar Paciente", command=self.obtener_paciente).pack()
-        tk.Button(self.root, text="Buscar Paciente", command=self.obtener_paciente).pack()
         tk.Button(self.root, text="Salir", command=self.usercontroller.logout).pack()
 
     def limpiar(self):
@@ -54,11 +54,13 @@ class View:
     def mostrar_resultados_busqueda(self, paciente, terapias):
         self.limpiar()
         self.root.geometry("400x300")
-        paciente_str = f"Nombre: {paciente[1]}, Edad: {paciente[2]}, Enfermedad: {paciente[3]}, ID: {paciente[0]}"
-        tk.Label(self.root, text=paciente_str).pack()
-        tk.Label(self.root, text="Terapias:").pack()
-        for terapia in terapias:
-            tk.Label(self.root, text=f"Terapia: {terapia[0]}, Fecha: {terapia[1]}").pack()
+        if paciente:
+            paciente_str = f"Nombre: {paciente[1]}, Edad: {paciente[2]}, Enfermedad: {paciente[3]}, ID: {paciente[0]}"
+            tk.Label(self.root, text=paciente_str).pack()
+            for terapia in terapias:
+                tk.Label(self.root, text=f"Terapia: {terapia[0]}, Fecha: {terapia[1]}").pack()
+        else:
+            tk.Label(self.root, text="Paciente no encontrado").pack()
         tk.Button(self.root, text="Volver", command=self.pantalla).pack()
 
     def agregar_paciente(self):
@@ -80,3 +82,4 @@ class View:
         id_paciente = self.prompt("Buscar Paciente", "ID del Paciente:")
         paciente, terapias = self.controllerP.buscar_paciente_por_id(id_paciente)
         self.mostrar_resultados_busqueda(paciente, terapias)
+

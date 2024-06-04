@@ -1,4 +1,5 @@
-from modelo import PacienteModelo, UsuarioModelo, TerapiaModelo
+from modelo import *
+from vista import *
 
 class PacienteControlador:
     def __init__(self):
@@ -7,7 +8,7 @@ class PacienteControlador:
 
     def agregar_paciente(self, nombre, edad, enfermedad, id_paciente):
         try:
-            self.modelo.agregar_paciente(nombre, edad, enfermedad, "", id_paciente)
+            self.modelo.agregar_paciente(nombre, edad, enfermedad, id_paciente)
             return True, "Paciente agregado correctamente"
         except ValueError as e:
             return False, str(e)
@@ -31,11 +32,10 @@ class PacienteControlador:
         self.terapia_modelo.asignar_terapia(id_paciente, terapia, fecha)
         return "Terapia asignada correctamente"
 
+
 class Controlador:
     def __init__(self, vista):
         self.modelo = UsuarioModelo()
-        self.username_entry = None
-        self.password_entry = None
         self.vista = vista
 
     def set_username_entry(self, entry):
@@ -46,7 +46,7 @@ class Controlador:
 
     def verificar_credenciales(self, username, password):
         return self.modelo.verificar_credenciales(username, password)
-
+    
     def login(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
