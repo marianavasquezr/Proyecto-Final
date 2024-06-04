@@ -1,13 +1,13 @@
-from modelo import *
+from modelo import PacienteModelo, UsuarioModelo, TerapiaModelo
 
 class PacienteControlador:
-    def _init_(self):
+    def __init__(self):
         self.modelo = PacienteModelo()
         self.terapia_modelo = TerapiaModelo()
 
     def agregar_paciente(self, nombre, edad, enfermedad, id_paciente):
         try:
-            self.modelo.agregar_paciente(nombre, edad, enfermedad, id_paciente)
+            self.modelo.agregar_paciente(nombre, edad, enfermedad, "", id_paciente)
             return True, "Paciente agregado correctamente"
         except ValueError as e:
             return False, str(e)
@@ -20,7 +20,6 @@ class PacienteControlador:
         terapias = self.terapia_modelo.obtener_terapias_por_paciente(id_paciente)
         return paciente, terapias
 
-
     def buscar_pacientes_por_nombre(self, nombre):
         return self.modelo.buscar_pacientes_por_nombre(nombre)
 
@@ -32,10 +31,31 @@ class PacienteControlador:
         self.terapia_modelo.asignar_terapia(id_paciente, terapia, fecha)
         return "Terapia asignada correctamente"
 
-
 class Controlador:
-    def _init_(self):
+    def __init__(self, vista):
         self.modelo = UsuarioModelo()
+        self.username_entry = None
+        self.password_entry = None
+        self.vista = vista
+
+    def set_username_entry(self, entry):
+        self.username_entry = entry
+
+    def set_password_entry(self, entry):
+        self.password_entry = entry
 
     def verificar_credenciales(self, username, password):
         return self.modelo.verificar_credenciales(username, password)
+
+    def login(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        if username == "medico" and password == "1234":
+            self.vista.pantalla()
+        elif username == "observador" and password == "5678":
+            self.vista.panttalla2()
+        else:
+            self.vista.show_message("Error", "Credenciales incorrectas")
+
+    def logout(self):
+        self.vista.entrar()
