@@ -10,7 +10,9 @@ class View:
 
     def entrar(self):
         self.limpiar()
-        self.root.geometry("350x200")
+        self.root.geometry("500x400")
+        
+        tk.Label(self.root, text="-----------------------------------------HOSPITAL UDEA----------------------------------------", bg="green").pack()
         tk.Label(self.root, text="Usuario:").pack()
         self.username_entry = tk.Entry(self.root)
         self.username_entry.pack()
@@ -18,6 +20,7 @@ class View:
         self.password_entry = tk.Entry(self.root, show="*")
         self.password_entry.pack()
         tk.Button(self.root, text="Login", command=self.usercontroller.login).pack()
+        
 
         # Configurar las entradas en el controlador después de definirlas
         self.usercontroller.set_username_entry(self.username_entry)

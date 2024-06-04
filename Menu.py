@@ -7,3 +7,4 @@ if __name__ == "__main__":
     usuario_controlador = Controlador(vista)
     vista.usercontroller = usuario_controlador  # Configurar el controlador de usuario en la vista
     vista.run()
+
