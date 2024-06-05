@@ -1,9 +1,12 @@
+from vista import View
 from controlador import *
-from vista import *
 
 if __name__ == "__main__":
     paciente_controlador = PacienteControlador()
-    vista = View(paciente_controlador, None)
-    usuario_controlador = Controlador(vista)
-    vista.usercontroller = usuario_controlador  
-    vista.run()
+    usuario_controlador = Controlador(None)  # Inicializar el controlador sin la vista por ahora
+    view = View(paciente_controlador, usuario_controlador)
+
+    usuario_controlador.vista = view  # Asignar la vista después de crearla
+
+    view.entrar()
+    view.root.mainloop()

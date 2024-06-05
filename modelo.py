@@ -18,6 +18,18 @@ class PacienteModelo:
                                 id_paciente INTEGER,
                                 terapia TEXT,
                                 fecha TEXT,
+                                sesiones INTEGER,
+                                FOREIGN KEY(id_paciente) REFERENCES pacientes(id)
+                              )''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS historial (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                id_paciente INTEGER,
+                                fecha_nacimiento TEXT,
+                                tipo_sangre TEXT,
+                                contacto_emergencia TEXT,
+                                ultimo_examen TEXT,
+                                enfermedades TEXT,
+                                cirugias TEXT,
                                 FOREIGN KEY(id_paciente) REFERENCES pacientes(id)
                               )''')
         self.conexion.commit()
@@ -30,9 +42,6 @@ class PacienteModelo:
                                VALUES (?, ?, ?, ?)''', (id_paciente, nombre, edad, enfermedad))
         self.conexion.commit()
 
-    # Otros métodos...
-
-
     def obtener_pacientes(self):
         self.cursor.execute('''SELECT * FROM pacientes''')
         return self.cursor.fetchall()
@@ -41,18 +50,12 @@ class PacienteModelo:
         self.cursor.execute("SELECT * FROM pacientes WHERE id=?", (id_paciente,))
         return self.cursor.fetchone()
 
-    def buscar_pacientes_por_nombre(self, nombre):
-        # Convertir el nombre a minúsculas para hacer la búsqueda case-insensitive
-        nombre = nombre.lower()
-        self.cursor.execute("SELECT * FROM pacientes WHERE LOWER(nombre) LIKE ?", (f"{nombre}%",))
-        return self.cursor.fetchall()
-
     def eliminar_paciente(self, id_paciente):
         self.cursor.execute('''DELETE FROM pacientes WHERE id = ?''', (id_paciente,))
         self.cursor.execute('''DELETE FROM terapias WHERE id_paciente = ?''', (id_paciente,))
+        self.cursor.execute('''DELETE FROM historial WHERE id_paciente = ?''', (id_paciente,))
         self.conexion.commit()
 
-        
 class UsuarioModelo:
     def __init__(self):
         self.usuarios = {"medico": "1234", "observador": "5678"}
@@ -68,11 +71,25 @@ class TerapiaModelo:
         self.conexion = sqlite3.connect('hospital.db')
         self.cursor = self.conexion.cursor()
 
-    def asignar_terapia(self, id_paciente, terapia, fecha):
-        self.cursor.execute('''INSERT INTO terapias (id_paciente, terapia, fecha)
-                               VALUES (?, ?, ?)''', (id_paciente, terapia, fecha))
+    def asignar_terapia(self, id_paciente, terapia, fecha, sesiones):
+        self.cursor.execute('''INSERT INTO terapias (id_paciente, terapia, fecha, sesiones)
+                               VALUES (?, ?, ?, ?)''', (id_paciente, terapia, fecha, sesiones))
         self.conexion.commit()
 
     def obtener_terapias_por_paciente(self, id_paciente):
-        self.cursor.execute('''SELECT terapia, fecha FROM terapias WHERE id_paciente=?''', (id_paciente,))
+        self.cursor.execute('''SELECT terapia, fecha, sesiones FROM terapias WHERE id_paciente=?''', (id_paciente,))
         return self.cursor.fetchall()
+
+class HistorialModelo:
+    def __init__(self):
+        self.conexion = sqlite3.connect('hospital.db')
+        self.cursor = self.conexion.cursor()
+
+    def agregar_historial(self, id_paciente, fecha_nacimiento, tipo_sangre, contacto_emergencia, ultimo_examen, enfermedades, cirugias):
+        self.cursor.execute('''INSERT INTO historial (id_paciente, fecha_nacimiento, tipo_sangre, contacto_emergencia, ultimo_examen, enfermedades, cirugias)
+                               VALUES (?, ?, ?, ?, ?, ?, ?)''', (id_paciente, fecha_nacimiento, tipo_sangre, contacto_emergencia, ultimo_examen, enfermedades, cirugias))
+        self.conexion.commit()
+
+    def obtener_historial_por_paciente(self, id_paciente):
+        self.cursor.execute('''SELECT fecha_nacimiento, tipo_sangre, contacto_emergencia, ultimo_examen, enfermedades, cirugias FROM historial WHERE id_paciente=?''', (id_paciente,))
+        return self.cursor.fetchone()
