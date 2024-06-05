@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 from datetime import datetime
+from controlador import *
 
 class View:
     def __init__(self):
@@ -12,7 +13,7 @@ class View:
         self.controllerP = PacienteControlador
         self.usercontroller = Controlador
         self.root = tk.Tk()
-        self.root.title("Gestión de Pacientes")
+        self.root.title("Gestión de Pacientes UDEA")
 
     def entrar(self):
         self.limpiar()
@@ -23,7 +24,7 @@ class View:
         
         tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()
         tk.Label(self.root, text="-(/◕ヮ◕)/-------------------------------------------------Bienvenidos al sistema de datos medicos--------------------------------------------------(/◕ヮ◕)/-\n",bg="light blue").pack() 
-        tk.Label(self.root, text="Ingrese con su usuario y contraseña para poder ingresar al sistema \n",bg="light green").pack()
+        tk.Label(self.root, text="Ingrese con su usuario y contraseña para poder ingresar al sistema \n_______________________________________________________________________________________________________________________________________________________________",bg="light green").pack()
         tk.Label(self.root, text="🧑🏼‍⚕️Usuario:",bg="light blue").pack()
         self.username_entry = tk.Entry(self.root)
         self.username_entry.pack()
@@ -41,19 +42,27 @@ class View:
 
     def pantalla(self):
         self.limpiar()
-        self.root.geometry("400x300")
-        tk.Label(self.root, text="                                         HOSPITAL UDEA                                              ", bg="green", font=("Helvetica", 18, "bold")).pack()
-        tk.Label(self.root, text="Hola Doctor! Bienvenido al sistema, seleccione la ocpion que desea ejecutar:\n\n",bg="light green").pack()
+        self.root.geometry("400x400")
+        tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+        tk.Label(self.root, text="Ƹ̵̡Ӝ̵̨̄Ʒ Hola Doctor! Bienvenido al sistema, seleccione la ocpion que desea ejecutar:\n\n",bg="light green").pack()
         tk.Button(self.root, text="Agregar Paciente", command=self.agregar_paciente).pack()
         tk.Button(self.root, text="Buscar Paciente", command=self.obtener_paciente).pack()
         tk.Button(self.root, text="Agregar terapia", command=self.asignar_terapia).pack()
         tk.Button(self.root, text="Salir", command=self.usercontroller.logout).pack()
+        tk.Label(self.root, text="🧑🏼Para mas informacion comunicarte a nuestros correos:\n",font=("Helvetica", 10, "bold"),bg="light blue").pack()
+        tk.Label(self.root,text="🏠 mariana.vasquez@udea.edu.co\n🏠 estefania.loaiza@udea.edu.co",bg="light blue").pack()
 
     def panttalla2(self):
         self.limpiar()
         self.root.geometry("450x350")
+        tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+        tk.Label(self.root, text="(/◕ヮ◕)/Querido usuario, acontinuacion ingrese el ID para encontrar\n la informacion del paciente:",bg="light blue").pack()
+        tk.Label(self.root, text="\n\n",bg="light green").pack()
         tk.Button(self.root, text="Consultar Paciente", command=self.obtener_paciente).pack()
         tk.Button(self.root, text="Salir", command=self.usercontroller.logout).pack()
+        tk.Label(self.root, text="\n\n",bg="light green").pack()
+        tk.Label(self.root, text="🧑🏼Para mas informacion comunicarte a nuestros correos:\n",font=("Helvetica", 10, "bold"),bg="light blue").pack()
+        tk.Label(self.root,text="🏠 mariana.vasquez@udea.edu.co\n🏠 estefania.loaiza@udea.edu.co",bg="light blue").pack()
 
     def limpiar(self):
         for widget in self.root.winfo_children():
@@ -74,12 +83,18 @@ class View:
         self.root.geometry("400x300")
         if paciente:
             paciente_str = f"Nombre: {paciente[1]}, Edad: {paciente[2]}, Enfermedad: {paciente[3]}, ID: {paciente[0]}"
-            tk.Label(self.root, text=paciente_str).pack()
+            tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+            tk.Label(self.root, text="\n🥼A continuación los datos encontrados del paciente:\n",bg="light green").pack()
+            tk.Label(self.root, text=paciente_str, bg="light blue").pack()
             for terapia in terapias:
-                tk.Label(self.root, text=f"Terapia: {terapia[0]}, Fecha: {terapia[1]}").pack()
+                tk.Label(self.root, text=f"Terapia: {terapia[0]}, Fecha: {terapia[1]}",bg="light blue").pack()
+            tk.Button(self.root, text="Eliminar", command=lambda p=paciente: self.controllerP.eliminar_paciente(p[0])).pack()
+            tk.Button(self.root, text="Volver", command=self.pantalla).pack()
+        
         else:
             tk.Label(self.root, text="Paciente no encontrado").pack()
-        tk.Button(self.root, text="Volver", command=self.pantalla).pack()
+            tk.Button(self.root, text="Volver", command=self.pantalla).pack()
+        
 
     def agregar_paciente(self):
         nombre = self.prompt("Agregar Paciente", "Nombre:")

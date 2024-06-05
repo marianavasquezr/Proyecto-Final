@@ -5,6 +5,7 @@ class PacienteControlador:
     def __init__(self):
         self.modelo = PacienteModelo()
         self.terapia_modelo = TerapiaModelo()
+        
 
     def agregar_paciente(self, nombre, edad, enfermedad, id_paciente):
         try:
@@ -21,12 +22,10 @@ class PacienteControlador:
         terapias = self.terapia_modelo.obtener_terapias_por_paciente(id_paciente)
         return paciente, terapias
 
-    def buscar_pacientes_por_nombre(self, nombre):
-        return self.modelo.buscar_pacientes_por_nombre(nombre)
-
     def eliminar_paciente(self, id_paciente):
         self.modelo.eliminar_paciente(id_paciente)
-        return "Paciente eliminado correctamente"
+        return True, "Paciente eliminado exitosamente"
+        
 
     def asignar_terapia(self, id_paciente, terapia, fecha):
         self.terapia_modelo.asignar_terapia(id_paciente, terapia, fecha)
