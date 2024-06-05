@@ -10,9 +10,13 @@ class View:
 
     def entrar(self):
         self.limpiar()
+        self.root.configure(background="light green")
         self.root.geometry("500x400")
         
-        tk.Label(self.root, text="-----------------------------------------HOSPITAL UDEA----------------------------------------", bg="green").pack()
+        
+        tk.Label(self.root, text="                                         HOSPITAL UDEA                                             ", bg="green", font=("Helvetica", 18, "bold")).pack()
+        tk.Label(self.root, text="Bienvenidos al sistema de datos medicos\n",bg="light green").pack()
+        tk.Label(self.root, text="Ingrese con su usuario y contraseña para poder ingresar al sistema \n").pack()
         tk.Label(self.root, text="Usuario:").pack()
         self.username_entry = tk.Entry(self.root)
         self.username_entry.pack()
