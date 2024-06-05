@@ -100,17 +100,16 @@ class View:
         self.root.geometry("400x300")
         if paciente:
             paciente_str = f"Nombre: {paciente[1]}, Edad: {paciente[2]}, Enfermedad: {paciente[3]}, ID: {paciente[0]}"
-            tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+            tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
             tk.Label(self.root, text="\n🥼A continuación los datos encontrados del paciente:\n",bg="light green").pack()
             tk.Label(self.root, text=paciente_str, bg="light blue").pack()
             for terapia in terapias:
                 tk.Label(self.root, text=f"Terapia: {terapia[0]}, Fecha: {terapia[1]}",bg="light blue").pack()
-            tk.Button(self.root, text="Eliminar", command=lambda p=paciente: self.controllerP.eliminar_paciente(p[0])).pack()
             tk.Button(self.root, text="Volver", command=self.panttalla2).pack()
         else:
             tk.Label(self.root, text="Paciente no encontrado").pack()
             tk.Button(self.root, text="Volver", command=self.panttalla2).pack()
-            
+
     def agregar_paciente(self):
         nombre = self.prompt("Agregar Paciente", "Nombre:")
         edad = self.prompt("Agregar Paciente", "Edad:")
