@@ -2,6 +2,11 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 
 class View:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("Gestión de Pacientes")
+
+
     def __init__(self, PacienteControlador, Controlador):
         self.controllerP = PacienteControlador
         self.usercontroller = Controlador
@@ -11,19 +16,22 @@ class View:
     def entrar(self):
         self.limpiar()
         self.root.configure(background="light green")
-        self.root.geometry("500x400")
+        self.root.geometry("800x400")
         
         
-        tk.Label(self.root, text="                                         HOSPITAL UDEA                                             ", bg="green", font=("Helvetica", 18, "bold")).pack()
-        tk.Label(self.root, text="Bienvenidos al sistema de datos medicos\n",bg="light green").pack()
-        tk.Label(self.root, text="Ingrese con su usuario y contraseña para poder ingresar al sistema \n").pack()
-        tk.Label(self.root, text="Usuario:").pack()
+        
+        tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()
+        tk.Label(self.root, text="-(/◕ヮ◕)/-------------------------------------------------Bienvenidos al sistema de datos medicos--------------------------------------------------(/◕ヮ◕)/-\n",bg="light blue").pack() 
+        tk.Label(self.root, text="Ingrese con su usuario y contraseña para poder ingresar al sistema \n",bg="light green").pack()
+        tk.Label(self.root, text="🧑🏼‍⚕️Usuario:",bg="light blue").pack()
         self.username_entry = tk.Entry(self.root)
         self.username_entry.pack()
-        tk.Label(self.root, text="Contraseña:").pack()
+        tk.Label(self.root, text="🧑🏼‍⚕️Contraseña:",bg="light blue").pack()
         self.password_entry = tk.Entry(self.root, show="*")
         self.password_entry.pack()
         tk.Button(self.root, text="Login", command=self.usercontroller.login).pack()
+        tk.Label(self.root, text="\n",bg="light green").pack()
+        tk.Label(self.root, text="Contactenos para más información:\n\n Diana Rojas +57 3214569870\n Mateo hincapie +57 3698521475",bg="light blue").pack()
         
 
         # Configurar las entradas en el controlador después de definirlas
@@ -33,6 +41,8 @@ class View:
     def pantalla(self):
         self.limpiar()
         self.root.geometry("400x300")
+        tk.Label(self.root, text="                                         HOSPITAL UDEA                                              ", bg="green", font=("Helvetica", 18, "bold")).pack()
+        tk.Label(self.root, text="Hola Doctor! Bienvenido al sistema, seleccione la ocpion que desea ejecutar:\n\n",bg="light green").pack()
         tk.Button(self.root, text="Agregar Paciente", command=self.agregar_paciente).pack()
         tk.Button(self.root, text="Buscar Paciente", command=self.obtener_paciente).pack()
         tk.Button(self.root, text="Agregar terapia", command=self.asignar_terapia).pack()
