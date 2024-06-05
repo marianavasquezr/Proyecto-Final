@@ -40,7 +40,8 @@ class View:
         self.root.geometry("400x400")
         self.root.configure(background="light green")
         tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()
-        tk.Label(self.root, text="\n\n\n\n",bg="light blue")
+        tk.Label(self.root, text="\n\n\n\n",bg="light green").pack()
+        tk.Label(self.root, text="Seleccione la opción que de desea ejecutar o cierre sesióm.",bg="light green").pack()
         tk.Label(self.root, text="Bienvenido, Doctor",bg="light blue").pack()
         tk.Button(self.root, text="Gestión de Pacientes", command=self.menu).pack()
         tk.Button(self.root, text="Cerrar Sesión", command=self.usercontroller.logout).pack()
@@ -51,7 +52,7 @@ class View:
         self.root.configure(background="light green")
         tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()
         tk.Label(self.root, text="\n\n\n",bg="light blue")
-        tk.Label(self.root, text="Bienvenido, Observador",bg="light blue").pack()
+        tk.Label(self.root, text="Bienvenido, Observador\n A continuación ingrese el ID para poder ver la infromación del paciente\n o cierre sesión ",bg="light blue").pack()
         tk.Button(self.root, text="Ver lista de Pacientes", command=self.menu2).pack()
         tk.Button(self.root, text="Cerrar Sesión", command=self.usercontroller.logout).pack()
 
@@ -61,6 +62,7 @@ class View:
 
     def mostrar_pacientes(self):
         self.limpiar()
+        tk.Label(self.root, text="\n\n").pack()
         tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()
         pacientes = self.controllerP.obtener_pacientes()
         text = ""
