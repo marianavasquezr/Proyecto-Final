@@ -11,8 +11,7 @@ class PacienteModelo:
                                 id INTEGER PRIMARY KEY,
                                 nombre TEXT,
                                 edad INTEGER,
-                                enfermedad TEXT,
-                                historia_medica TEXT
+                                enfermedad TEXT
                               )''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS terapias (
                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
