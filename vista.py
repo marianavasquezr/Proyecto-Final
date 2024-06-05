@@ -58,7 +58,7 @@ class View:
         tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
         tk.Label(self.root, text="(/◕ヮ◕)/Querido usuario, acontinuacion ingrese el ID para encontrar\n la informacion del paciente:",bg="light blue").pack()
         tk.Label(self.root, text="\n\n",bg="light green").pack()
-        tk.Button(self.root, text="Consultar Paciente", command=self.obtener_paciente).pack()
+        tk.Button(self.root, text="Consultar Paciente", command=self.obtener_paciente2).pack()
         tk.Button(self.root, text="Salir", command=self.usercontroller.logout).pack()
         tk.Label(self.root, text="\n\n",bg="light green").pack()
         tk.Label(self.root, text="🧑🏼Para mas informacion comunicarte a nuestros correos:\n",font=("Helvetica", 10, "bold"),bg="light blue").pack()
@@ -95,7 +95,22 @@ class View:
             tk.Label(self.root, text="Paciente no encontrado").pack()
             tk.Button(self.root, text="Volver", command=self.pantalla).pack()
         
-
+    def mostrar_resultados_busqueda2(self, paciente, terapias):
+        self.limpiar()
+        self.root.geometry("400x300")
+        if paciente:
+            paciente_str = f"Nombre: {paciente[1]}, Edad: {paciente[2]}, Enfermedad: {paciente[3]}, ID: {paciente[0]}"
+            tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+            tk.Label(self.root, text="\n🥼A continuación los datos encontrados del paciente:\n",bg="light green").pack()
+            tk.Label(self.root, text=paciente_str, bg="light blue").pack()
+            for terapia in terapias:
+                tk.Label(self.root, text=f"Terapia: {terapia[0]}, Fecha: {terapia[1]}",bg="light blue").pack()
+            tk.Button(self.root, text="Eliminar", command=lambda p=paciente: self.controllerP.eliminar_paciente(p[0])).pack()
+            tk.Button(self.root, text="Volver", command=self.panttalla2).pack()
+        else:
+            tk.Label(self.root, text="Paciente no encontrado").pack()
+            tk.Button(self.root, text="Volver", command=self.panttalla2).pack()
+            
     def agregar_paciente(self):
         nombre = self.prompt("Agregar Paciente", "Nombre:")
         edad = self.prompt("Agregar Paciente", "Edad:")
@@ -124,3 +139,7 @@ class View:
         paciente, terapias = self.controllerP.buscar_paciente_por_id(id_paciente)
         self.mostrar_resultados_busqueda(paciente, terapias)
 
+    def obtener_paciente2(self):
+        id_paciente = self.prompt("Buscar Paciente", "ID del Paciente:")
+        paciente, terapias = self.controllerP.buscar_paciente_por_id(id_paciente)
+        self.mostrar_resultados_busqueda2(paciente, terapias)
