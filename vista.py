@@ -88,13 +88,21 @@ class View:
             tk.Label(self.root, text=paciente_str, bg="light blue").pack()
             for terapia in terapias:
                 tk.Label(self.root, text=f"Terapia: {terapia[0]}, Fecha: {terapia[1]}",bg="light blue").pack()
-            tk.Button(self.root, text="Eliminar", command=lambda p=paciente: self.controllerP.eliminar_paciente(p[0])).pack()
+            tk.Button(self.root, text="Eliminar", command=lambda: self.eliminar_paciente_busqueda(paciente)).pack()
             tk.Button(self.root, text="Volver", command=self.pantalla).pack()
         
         else:
-            tk.Label(self.root, text="Paciente no encontrado").pack()
+            tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+            tk.Label(self.root, text="\n\n",bg="light green").pack()
+            tk.Label(self.root, text="Paciente no encontrado", bg="light blue").pack()
             tk.Button(self.root, text="Volver", command=self.pantalla).pack()
-        
+            
+    def eliminar_paciente_busqueda(self, paciente):
+        p=paciente; 
+        message = self.controllerP.eliminar_paciente(p[0])
+        self.show_message("TecnoSalud UdeA", message[1])
+        self.pantalla()
+
     def mostrar_resultados_busqueda2(self, paciente, terapias):
         self.limpiar()
         self.root.geometry("400x300")
