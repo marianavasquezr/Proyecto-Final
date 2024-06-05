@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
+from datetime import datetime
 
 class View:
     def __init__(self):
@@ -91,7 +92,15 @@ class View:
     def asignar_terapia(self):
         id_paciente = self.prompt("Asignar Terapia", "ID del Paciente:")
         terapia = self.prompt("Asignar Terapia", "Terapia:")
-        fecha = self.prompt("Asignar Terapia", "Fecha:")
+        while True:
+            fecha = self.prompt("Asignar Terapia", "Fecha (formato: YYYY-MM-DD):")
+            try:
+                fecha_valida = datetime.strptime(fecha, '%Y-%m-%d')
+                break
+            except ValueError:
+                print("-----------------------------------------------------------------------------------")
+                print("Fecha inválida. Por favor, introduce una fecha en el formato correcto (YYYY-MM-DD).")
+                print("-----------------------------------------------------------------------------------")
         message = self.controllerP.asignar_terapia(id_paciente, terapia, fecha)
         self.show_message("Resultado", message)
 
