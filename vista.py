@@ -22,7 +22,7 @@ class View:
         
         
         
-        tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()
+        tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()
         tk.Label(self.root, text="-(/◕ヮ◕)/-------------------------------------------------Bienvenidos al sistema de datos medicos--------------------------------------------------(/◕ヮ◕)/-\n",bg="light blue").pack() 
         tk.Label(self.root, text="Ingrese con su usuario y contraseña para poder ingresar al sistema \n_______________________________________________________________________________________________________________________________________________________________",bg="light green").pack()
         tk.Label(self.root, text="🧑🏼‍⚕️Usuario:",bg="light blue").pack()
@@ -43,7 +43,7 @@ class View:
     def pantalla(self):
         self.limpiar()
         self.root.geometry("400x400")
-        tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+        tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
         tk.Label(self.root, text="Ƹ̵̡Ӝ̵̨̄Ʒ Hola Doctor! Bienvenido al sistema, seleccione la ocpion que desea ejecutar:\n\n",bg="light green").pack()
         tk.Button(self.root, text="Agregar Paciente", command=self.agregar_paciente).pack()
         tk.Button(self.root, text="Buscar Paciente", command=self.obtener_paciente).pack()
@@ -55,7 +55,7 @@ class View:
     def panttalla2(self):
         self.limpiar()
         self.root.geometry("450x350")
-        tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+        tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
         tk.Label(self.root, text="(/◕ヮ◕)/Querido usuario, acontinuacion ingrese el ID para encontrar\n la informacion del paciente:",bg="light blue").pack()
         tk.Label(self.root, text="\n\n",bg="light green").pack()
         tk.Button(self.root, text="Consultar Paciente", command=self.obtener_paciente).pack()
@@ -83,7 +83,7 @@ class View:
         self.root.geometry("400x300")
         if paciente:
             paciente_str = f"Nombre: {paciente[1]}, Edad: {paciente[2]}, Enfermedad: {paciente[3]}, ID: {paciente[0]}"
-            tk.Label(self.root, text="                                                🫀 HOSPITAL UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
+            tk.Label(self.root, text="                                                🫀 TECNOSALUD UDEA 🫀                                                 ", bg="green", font=("Helvetica", 18, "bold")).pack()        
             tk.Label(self.root, text="\n🥼A continuación los datos encontrados del paciente:\n",bg="light green").pack()
             tk.Label(self.root, text=paciente_str, bg="light blue").pack()
             for terapia in terapias:
